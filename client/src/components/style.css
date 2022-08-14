@@ -1,0 +1,32 @@
+/* banner */
+
+.container {
+  position: relative;
+  text-align: center;
+  color: white;
+}
+
+.home_banner{
+  width: 100vw;
+  height: 50vh;                               
+}
+
+.home_banner_text{
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;                            
+}
+
+.centered {
+  font-size: 60px;
+  font-weight: 600;
+}
+
+
+/* post */
+.post_container{
+  width: 250px;
+  height: 400px;
+}

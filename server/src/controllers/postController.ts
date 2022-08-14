@@ -44,7 +44,7 @@ export const updatePost = async (req: Request, res: Response) => {
       },
       { new: true }
     );
-    res.status(200).json({ message: "Post Deleted", data: post });
+    res.status(200).json({ message: "Post Updated", data: post });
   } catch (error) {
     res.status(500).json(error);
   }

@@ -1,0 +1,22 @@
+.cp_container{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 90vh;
+}
+.cp_form{
+  height: 60vh;
+  width: 720px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+}
+.cp_item{
+  margin: 10px 0;
+}
+.cp_image{
+  display: flex;
+}
+.cp_image p{
+  color: grey;
+}
