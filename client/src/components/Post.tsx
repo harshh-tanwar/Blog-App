@@ -26,7 +26,7 @@ const Post: React.FC<Props> = ({ post }) => {
   return (
     <Card className="post_container">
       <CardHeader
-        avatar={<Avatar>{post.picture}</Avatar>}
+        avatar={<Avatar>H</Avatar>}
         action={
           <IconButton aria-label="settings">
             <MoreVert />
@@ -38,7 +38,7 @@ const Post: React.FC<Props> = ({ post }) => {
       <CardMedia
         component="img"
         height="194"
-        image={banner}
+        image={post.picture}
         alt="Paella dish"
       />
       <CardContent>

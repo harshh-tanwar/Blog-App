@@ -1,38 +1,57 @@
 import React, { useState, useEffect } from "react";
 import Header from "../components/Header";
-import { Box, TextField, IconButton } from "@mui/material";
-import { AttachFile } from "@mui/icons-material";
-import config from "../config/config";
+import { TextField, IconButton, Button } from "@mui/material";
+import { PhotoCamera } from "@mui/icons-material";
 import axios from "axios";
+import config from "../config/config";
 import "./style.css";
+import Upload from "../utils/Upload";
+import { useNavigate } from "react-router-dom";
+
+const initialValues = {
+  title: "",
+  desc: "",
+  picture: "",
+  userName: "Harsh",
+};
 
 const CreatePost = () => {
+  const [post, setPost] = useState(initialValues);
   const [file, setFile] = useState<File>();
   const [image, setImage] = useState<string>("");
-  const url: string =
-    /* picture ? picture : */ "https://user-images.githubusercontent.com/43302778/106805462-7a908400-6645-11eb-958f-cd72b74a17b3.jpg";
+  const navigate = useNavigate();
+  const url: string = image
+    ? image
+    : "https://user-images.githubusercontent.com/43302778/106805462-7a908400-6645-11eb-958f-cd72b74a17b3.jpg";
 
   useEffect(() => {
     const getImage = async () => {
       if (file) {
-        const data = new FormData();
-        data.append("name", file.name);
-        data.append("file", file);
-        /* console.log(file.name); */
-
-        const image = await axios.post(`${config.server}/api/upload`, data);
-        setImage(image.data);
-        console.log(`poop - ${image.data.message}`)
+        const name = `${new Date().getTime()}_${file.name}`;
+        const image = await Upload(file, name);
+        setImage(image);
+        post.picture = image;
       }
     };
     getImage();
   }, [file]);
 
+  const handleChange = (e: any) => {
+    setPost({ ...post, [e.target.name]: e.target.value });
+  };
+
+  const savePost = async () => {
+    console.log(post);
+    const res = await axios.post(`${config.server}/api/create`, post);
+    console.log(res.data);
+    setTimeout(() => navigate("/"), 1000);
+  };
+
   return (
     <>
       <Header />
       <div className="cp_container">
-        <Box component="form" className="cp_form">
+        <div className="cp_form">
           <img src={url} alt="" />
           <div className="cp_image">
             <IconButton color="primary" component="label">
@@ -41,28 +60,49 @@ const CreatePost = () => {
                 accept="image/*"
                 hidden
                 onChange={(e) => {
-                  console.log(e.target.files[0]);
                   setFile(e.target.files[0]);
                 }}
               />
-              <AttachFile fontSize="medium" />
+              <PhotoCamera fontSize="medium" />
             </IconButton>
-            <p>Upload</p>
+            {image ? <p>Uploaded</p> : <p>Upload</p>}
           </div>
           <TextField
             id="outlined-basic"
             label="Title"
             multiline
             className="cp_item"
+            onChange={(e) => handleChange(e)}
+            name="title"
           />
           <TextField
             id="outlined-basic"
             label="Description"
             multiline
-            rows={3}
+            rows={4}
             className="cp_item"
+            onChange={(e) => handleChange(e)}
+            name="desc"
           />
-        </Box>
+          <div className="cp_buttons">
+            <Button
+              variant="outlined"
+              size="large"
+              color="error"
+              onClick={() => navigate("/")}
+            >
+              <strong>Back</strong>
+            </Button>
+            <Button
+              variant="outlined"
+              size="large"
+              color="success"
+              onClick={savePost}
+            >
+              <strong>Publish</strong>
+            </Button>
+          </div>
+        </div>
       </div>
     </>
   );

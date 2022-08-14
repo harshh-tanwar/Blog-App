@@ -10,6 +10,10 @@
   display: flex;
   flex-direction: column;
   justify-content: space-evenly;
+  padding: 20px;
+  border: 2px solid grey;
+  border-radius: 10px                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   ;
+  background-color: rgb(234, 234, 234);
 }
 .cp_item{
   margin: 10px 0;
@@ -19,4 +23,8 @@
 }
 .cp_image p{
   color: grey;
+}
+.cp_buttons{
+  display:flex;
+  justify-content: space-between;
 }
