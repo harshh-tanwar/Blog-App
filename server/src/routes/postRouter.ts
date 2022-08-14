@@ -3,6 +3,7 @@ import express, { Router, Request, Response, NextFunction } from "express";
 //controllers
 import {
   createPost,
+  getPost,
   getPosts,
   deletePost,
   updatePost,
@@ -17,6 +18,8 @@ router.get("/", (req: Request, res: Response) => {
 router.post("/create", createPost);
 
 router.get("/posts", getPosts);
+
+router.get("/post/:id", getPost);
 
 router.delete("/delete/:id", deletePost);
 

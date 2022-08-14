@@ -15,6 +15,7 @@ import "./style.css";
 import Modal from "./Modal";
 import config from "../config/config";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 interface Props {
   post: {
@@ -36,6 +37,7 @@ const Post: React.FC<Props> = ({ post }) => {
     timeZone: "Asia/Kolkata",
   });
   const id = post._id;
+  const navigate = useNavigate();
 
   const handleClick = (e: any) => {
     setAnchorEl(e.currentTarget);
@@ -76,6 +78,13 @@ const Post: React.FC<Props> = ({ post }) => {
                   func={deletePost}
                   id={id}
                 />
+                <Delete className="post-delete" />
+              </MenuItem>
+              <MenuItem
+                style={{ fontSize: "16px", color: "black" }}
+                onClick={() => navigate(`/update/${id}`)}
+              >
+                Update
                 <Delete className="post-delete" />
               </MenuItem>
             </Menu>
