@@ -16,6 +16,7 @@ import Modal from "./Modal";
 import config from "../config/config";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 interface Props {
   post: {
@@ -93,10 +94,15 @@ const Post: React.FC<Props> = ({ post }) => {
         title={post.title}
         subheader={`${postDate}ㅤㅤby-${post.userName}`}
       />
-      <CardMedia component="img" height="194" image={image} alt="no image" />
-      <CardContent>
-        <p>{post.desc}</p>
-      </CardContent>
+      <Link
+        to={`/detail/${post._id}`}
+        style={{ textDecoration: "none", color: "inherit" }}
+      >
+        <CardMedia component="img" height="194" image={image} alt="no image" />
+        <CardContent>
+          <p>{post.desc}</p>
+        </CardContent>
+      </Link>
     </Card>
   );
 };

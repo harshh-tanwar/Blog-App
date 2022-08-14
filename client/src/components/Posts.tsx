@@ -1,10 +1,8 @@
 import React, { useState, useEffect } from "react";
 import Post from "./Post";
-import { Grid } from "@mui/material";
-import { Link } from "react-router-dom";
 import config from "../config/config";
 import axios from "axios";
-import "./style.css"
+import "./style.css";
 
 const Posts = () => {
   const [posts, setPosts] = useState<
