@@ -4,6 +4,7 @@ import { Grid } from "@mui/material";
 import { Link } from "react-router-dom";
 import config from "../config/config";
 import axios from "axios";
+import "./style.css"
 
 const Posts = () => {
   const [posts, setPosts] = useState<
@@ -27,11 +28,9 @@ const Posts = () => {
   }, []);
 
   return (
-    <div style={{display: "flex"}}>
+    <div className="posts_container">
       {posts.reverse().map((post) => (
-        <Grid item lg={3} md={4} sm={12} xs={12}>
-          <Post post={post} />
-        </Grid>
+        <Post post={post} />
       ))}
     </div>
   );

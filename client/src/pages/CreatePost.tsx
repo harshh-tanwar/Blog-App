@@ -52,7 +52,7 @@ const CreatePost = () => {
       <Header />
       <div className="cp_container">
         <div className="cp_form">
-          <img src={url} alt="" />
+          <img src={url} alt="post_image" className="cp_picture" />
           <div className="cp_image">
             <IconButton color="primary" component="label">
               <input

@@ -1,5 +1,4 @@
-/* banner */
-
+/* banner __________*/
 .container {
   position: relative;
   text-align: center;
@@ -24,9 +23,30 @@
   font-weight: 600;
 }
 
-
-/* post */
+/* post __________*/
 .post_container{
-  width: 250px;
+  margin: 3vh 1vw 0 1vw;
+  min-width: 300px;
+  width: 20vw;
   height: 400px;
+}
+
+/* posts __________*/
+.posts_container{
+  margin: 0 5vw;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+/* modal __________ */
+.modal_paper{
+  background-color: white;
+  padding: 30px;
+  border: 2px solid black;
+  box-shadow: 5px;
+}
+.modal{
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
