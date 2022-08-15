@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import Post from "../schema/postSchema";
+import User from "../schema/userSchema";
 
 export const createPost = async (req: Request, res: Response) => {
   try {
@@ -24,8 +25,24 @@ export const getPost = async (req: Request, res: Response) => {
 
 export const getPosts = async (req: Request, res: Response) => {
   try {
-    const posts = await Post.find();
-    res.status(200).json({ message: "Got All Posts", data: posts });
+    const userId = req.query.userId;
+    let posts;
+    if (userId !== undefined) {
+      const user = await User.findById(userId);
+      const email = user?.email;
+      posts = await Post.find({ userEmail: { $in: email } }).sort({
+        createdAt: -1,
+      });
+      const count = await Post.count({ userEmail: { $in: email } });
+      res
+        .status(200)
+        .json({ message: "Got User Posts", count: count, data: posts });
+    } else {
+      posts = await Post.find().sort({ createdAt: -1 }).sort({
+        createdAt: -1,
+      });
+      res.status(200).json({ message: "Got All Posts", data: posts });
+    }
   } catch (error) {
     res.status(500).json(error);
   }

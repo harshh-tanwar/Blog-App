@@ -65,3 +65,26 @@
 .error-container h1{
 font-size: 40px;
 }
+
+/* dashboard __________ */
+.dash_container{
+  margin-top: 5vh;
+
+}
+.dashUser_container{
+  margin: 0 5vw;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex-wrap: wrap;
+}
+.dashUser_container img{
+  border: 7px solid black;
+  border-radius: 50%;
+}
+.dashPost_container{
+  margin: 0 5vw;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+}

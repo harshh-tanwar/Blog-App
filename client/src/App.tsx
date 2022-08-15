@@ -7,6 +7,7 @@ import CreatePost from "./pages/CreatePost";
 import DetailPost from "./pages/DetailPost";
 import UpdatePost from "./pages/UpdatePost";
 import Error from "./pages/Error";
+import Dashboard from "./pages/Dashboard";
 
 const App: React.FunctionComponent = () => {
   return (
@@ -17,6 +18,7 @@ const App: React.FunctionComponent = () => {
           <Route path="/create" element={<CreatePost />} />
           <Route path="/detail/:id" element={<DetailPost />} />
           <Route path="/update/:id" element={<UpdatePost />} />
+          <Route path="/user/:id" element={<Dashboard />} />
           <Route path="*" element={<Error />} />
         </Routes>
       </Router>

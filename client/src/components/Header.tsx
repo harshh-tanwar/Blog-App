@@ -44,7 +44,7 @@ const Header = () => {
       />
       <div
         style={{
-          width: "320px",
+          width: "450px",
           display: "flex",
           justifyContent: "space-between",
           alignItems: "center",
@@ -52,6 +52,9 @@ const Header = () => {
       >
         {user ? (
           <>
+            <Button variant="outlined" onClick={() => navigate(`/user/${user._id}`)}>
+              Dashboard
+            </Button>
             <IconButton>
               <Avatar
                 style={{ height: "40px", width: "40px" }}
