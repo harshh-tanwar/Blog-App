@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Card,
   CardHeader,
@@ -9,7 +9,7 @@ import {
   Menu,
   MenuItem,
 } from "@mui/material";
-import { MoreVert, Delete } from "@mui/icons-material";
+import { MoreVert, Delete, Edit } from "@mui/icons-material";
 import banner from "../assets/banner.jpg";
 import "./style.css";
 import Modal from "./Modal";
@@ -38,7 +38,7 @@ const Post: React.FC<Props> = ({ post, deleted, setDeleted }) => {
   var user = JSON.parse(localStorage.getItem("user-data"));
   const image = post.picture
     ? post.picture
-    : "https://w.wallhaven.cc/full/x8/wallhaven-x8qpod.jpg";
+    : "https://w.wallhaven.cc/full/od/wallhaven-od1wvl.png";
   const postDate = new Date(post.createdAt).toLocaleString(undefined, {
     timeZone: "Asia/Kolkata",
   });
@@ -55,7 +55,7 @@ const Post: React.FC<Props> = ({ post, deleted, setDeleted }) => {
   const deletePost = async (id: number) => {
     try {
       const res = await axios.delete(`${config.server}/api/delete/${id}`);
-      setDeleted(!deleted);
+      setDeleted(true);
       console.log(res.data);
     } catch (error) {
       console.log(error);
@@ -87,14 +87,14 @@ const Post: React.FC<Props> = ({ post, deleted, setDeleted }) => {
                       func={deletePost}
                       id={id}
                     />
-                    <Delete className="post-delete" />
+                    <Delete style={{ color: "red" }} />
                   </MenuItem>
                   <MenuItem
                     style={{ fontSize: "16px", color: "black" }}
                     onClick={() => navigate(`/update/${id}`)}
                   >
-                    Update
-                    <Delete className="post-delete" />
+                    Editㅤ
+                    <Edit style={{ color: "blue" }} />
                   </MenuItem>
                 </Menu>
               </>

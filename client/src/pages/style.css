@@ -52,3 +52,16 @@
   display:flex;
   justify-content: space-between;
 }
+
+/* error __________*/
+.error-container{
+  height: 50vh;
+  margin-top: 10vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.error-container h1{
+font-size: 40px;
+}
