@@ -27,9 +27,11 @@ interface Props {
     createdAt: string;
     userName: string;
   };
+  deleted: any;
+  setDeleted: any;
 }
 
-const Post: React.FC<Props> = ({ post }) => {
+const Post: React.FC<Props> = ({ post, deleted, setDeleted }) => {
   const [anchorEl, setAnchorEl] = useState(null);
   const image = post.picture
     ? post.picture
@@ -50,6 +52,7 @@ const Post: React.FC<Props> = ({ post }) => {
   const deletePost = async (id: number) => {
     try {
       const res = await axios.delete(`${config.server}/api/delete/${id}`);
+      setDeleted(!deleted);
       console.log(res.data);
     } catch (error) {
       console.log(error);

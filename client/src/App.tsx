@@ -19,7 +19,7 @@ const App: React.FunctionComponent = () => {
           <Route path="/detail/:id" element={<DetailPost />} />
           <Route path="/update/:id" element={<UpdatePost />} />
           <Route path="/login" element={<Login />} />
-          <Route path="*" element={<Error />} />
+          {/* <Route path="*" element={<Error />} /> */}
         </Routes>
       </Router>
     </div>

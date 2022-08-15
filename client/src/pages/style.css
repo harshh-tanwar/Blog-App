@@ -35,6 +35,20 @@
 }
 
 /* detail ___________ */
+.detail_container{
+  width: 70vw;
+  height: 90vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-left: 15vw;
+}
 .detail_image{
-  height: 50vh;
+  width: 100%;
+}
+.detail_buttons{
+  width: 100%;
+  padding-top: 2vh;
+  display:flex;
+  justify-content: space-between;
 }

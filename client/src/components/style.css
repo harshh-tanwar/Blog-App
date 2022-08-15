@@ -35,6 +35,7 @@
 .posts_container{
   margin: 0 5vw;
   display: flex;
+  justify-content: center;
   flex-wrap: wrap;
 }
 

@@ -7,6 +7,7 @@ import config from "../config/config";
 import "./style.css";
 import Upload from "../utils/Upload";
 import { useNavigate, useParams } from "react-router-dom";
+const Buffer = require("buffer").Buffer;
 
 const initialValues = {
   title: "",
@@ -17,7 +18,6 @@ const initialValues = {
 
 const DetailPost = () => {
   const [post, setPost] = useState(initialValues);
-  const [file, setFile] = useState<File>();
   const [image, setImage] = useState<string>("");
   const navigate = useNavigate();
   const url: string = image
@@ -37,12 +37,59 @@ const DetailPost = () => {
     fetchData();
   }, []);
 
+  const generatePdf = async () => {
+    const url = { url: window.location.href };
+    const response = await axios.post(`${config.server}/api/getPdf`, url);
+    const buffer = response.data;
+    var bufferArray = base64ToArrayBufferAkash(buffer);
+    var blobStore = new Blob([bufferArray], { type: "application/pdf" });
+    var data = window.URL.createObjectURL(blobStore);
+    var link = document.createElement("a");
+    document.body.appendChild(link);
+    link.href = data;
+    link.download = "output.pdf";
+    link.click();
+    window.URL.revokeObjectURL(data);
+    link.remove();
+  };
+
+  const base64ToArrayBufferAkash = (data: any) => {
+    var bString = window.atob(data);
+    var bLength = bString.length;
+    var bytes = new Uint8Array(bLength);
+    for (var i = 0; i < bLength; i++) {
+      var ascii = bString.charCodeAt(i);
+      bytes[i] = ascii;
+    }
+    return bytes;
+  };
+
   return (
     <>
       <Header />
-      <img src={image} alt="post_image" className="detail_image" />
-      <h3>{post.title}</h3>
-      <p>{post.desc}</p>
+      <div className="detail_container">
+        <img src={image} alt="post_image" className="detail_image" />
+        <div className="detail_buttons">
+          <Button
+            variant="outlined"
+            size="large"
+            color="error"
+            onClick={() => navigate("/")}
+          >
+            <strong>Back</strong>
+          </Button>
+          <Button
+            variant="outlined"
+            size="large"
+            color="success"
+            onClick={generatePdf}
+          >
+            <strong>Download as Pdf</strong>
+          </Button>
+        </div>
+        <h3>{post.title}</h3>
+        <p>{post.desc}</p>
+      </div>
     </>
   );
 };

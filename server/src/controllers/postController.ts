@@ -15,9 +15,7 @@ export const createPost = async (req: Request, res: Response) => {
 export const getPost = async (req: Request, res: Response) => {
   try {
     const id = req.params.id;
-    console.log("poop")
     const post = await Post.findById(id);
-    console.log(post);
     res.status(200).json({ message: "Got the Post", data: post });
   } catch (error) {
     res.status(500).json(error);

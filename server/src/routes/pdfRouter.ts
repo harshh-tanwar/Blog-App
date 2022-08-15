@@ -1,17 +1,14 @@
 import express, { Router, Request, Response, NextFunction } from "express";
 
 //controllers
-import {
-uploadFile
-} from "../controllers/upload";
+import { generatePdf } from "../controllers/pdfController";
 
 const router: Router = express.Router();
 
 router.get("/", (req: Request, res: Response) => {
-  res.send("🟢 Upload Api Working");
+  res.send("🟢 Pdf Api Working");
 });
 
-router.post("/upload", uploadFile);
-
+router.post("/getPdf", generatePdf);
 
 export default router;

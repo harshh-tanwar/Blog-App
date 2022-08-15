@@ -12,7 +12,7 @@ import cors from "cors";
 import dbConnect from "./database/dbConnect";
 //router
 import postRouter from "./routes/postRouter";
-import uploadRouter from "./routes/upload";
+import uploadRouter from "./routes/pdfRouter";
 
 const app: Application = express();
 const port = process.env.PORT || config.port;

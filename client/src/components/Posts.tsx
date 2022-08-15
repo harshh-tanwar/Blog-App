@@ -15,6 +15,7 @@ const Posts = () => {
       userName: string;
     }[]
   >([]);
+  const [deleted, setDeleted] = useState<boolean>(true);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -23,12 +24,12 @@ const Posts = () => {
       setPosts(response.data.data);
     };
     fetchData();
-  }, []);
+  }, [deleted]);
 
   return (
     <div className="posts_container">
       {posts.reverse().map((post) => (
-        <Post post={post} />
+        <Post post={post} deleted={deleted} setDeleted={setDeleted} />
       ))}
     </div>
   );
