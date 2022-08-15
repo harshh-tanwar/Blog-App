@@ -13,6 +13,8 @@ const initialValues = {
   desc: "",
   picture: "",
   userName: "Harsh",
+  userImage: "",
+  userEmail: "",
 };
 
 const CreatePost = () => {
@@ -20,11 +22,15 @@ const CreatePost = () => {
   const [file, setFile] = useState<File>();
   const [image, setImage] = useState<string>("");
   const navigate = useNavigate();
+  var user = JSON.parse(localStorage.getItem("user-data"));
   const url: string = image
     ? image
     : "https://user-images.githubusercontent.com/43302778/106805462-7a908400-6645-11eb-958f-cd72b74a17b3.jpg";
 
   useEffect(() => {
+    post.userImage = user.userImage;
+    post.userName = user.name;
+    post.userEmail = user.email;
     const getImage = async () => {
       if (file) {
         const name = `${new Date().getTime()}_${file.name}`;

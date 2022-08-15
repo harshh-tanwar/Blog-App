@@ -26,6 +26,8 @@ interface Props {
     picture: string;
     createdAt: string;
     userName: string;
+    userImage: string;
+    userEmail: string;
   };
   deleted: any;
   setDeleted: any;
@@ -33,6 +35,7 @@ interface Props {
 
 const Post: React.FC<Props> = ({ post, deleted, setDeleted }) => {
   const [anchorEl, setAnchorEl] = useState(null);
+  var user = JSON.parse(localStorage.getItem("user-data"));
   const image = post.picture
     ? post.picture
     : "https://w.wallhaven.cc/full/x8/wallhaven-x8qpod.jpg";
@@ -61,37 +64,43 @@ const Post: React.FC<Props> = ({ post, deleted, setDeleted }) => {
   return (
     <Card className="post_container">
       <CardHeader
-        avatar={<Avatar>H</Avatar>}
+        avatar={<Avatar src={post.userImage} />}
         action={
           <>
-            <IconButton aria-label="settings" onClick={handleClick}>
-              <MoreVert />
-            </IconButton>
-            <Menu
-              id="simple-menu"
-              anchorEl={anchorEl}
-              keepMounted
-              open={Boolean(anchorEl)}
-              onClose={handleClose}
-            >
-              <MenuItem>
-                <Modal
-                  message="Delete"
-                  modalHeader="Confirmation !"
-                  modalMessage="Do you want to delete the post?"
-                  func={deletePost}
-                  id={id}
-                />
-                <Delete className="post-delete" />
-              </MenuItem>
-              <MenuItem
-                style={{ fontSize: "16px", color: "black" }}
-                onClick={() => navigate(`/update/${id}`)}
-              >
-                Update
-                <Delete className="post-delete" />
-              </MenuItem>
-            </Menu>
+            {user && user.email === post.userEmail ? (
+              <>
+                <IconButton aria-label="settings" onClick={handleClick}>
+                  <MoreVert />
+                </IconButton>
+                <Menu
+                  id="simple-menu"
+                  anchorEl={anchorEl}
+                  keepMounted
+                  open={Boolean(anchorEl)}
+                  onClose={handleClose}
+                >
+                  <MenuItem>
+                    <Modal
+                      message="Delete"
+                      modalHeader="Confirmation !"
+                      modalMessage="Do you want to delete the post?"
+                      func={deletePost}
+                      id={id}
+                    />
+                    <Delete className="post-delete" />
+                  </MenuItem>
+                  <MenuItem
+                    style={{ fontSize: "16px", color: "black" }}
+                    onClick={() => navigate(`/update/${id}`)}
+                  >
+                    Update
+                    <Delete className="post-delete" />
+                  </MenuItem>
+                </Menu>
+              </>
+            ) : (
+              <></>
+            )}
           </>
         }
         title={post.title}

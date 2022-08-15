@@ -12,7 +12,6 @@ const getPdf = async (url: any) => {
   // Downlaod the PDF
   const pdfBuffer = await page.pdf({
     /* path: "result.pdf", */
-    margin: { top: "100px", right: "50px", bottom: "100px", left: "50px" },
     printBackground: true,
     format: "A4",
   });

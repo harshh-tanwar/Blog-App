@@ -14,6 +14,12 @@ const postSchema = new mongoose.Schema(
     userName: {
       type: String,
     },
+    userImage: {
+      type: String,
+    },
+    userEmail: {
+      type: String,
+    },
   },
   {
     timestamps: true,

@@ -13,6 +13,8 @@ const Posts = () => {
       picture: string;
       createdAt: string;
       userName: string;
+      userImage: string;
+      userEmail: string;
     }[]
   >([]);
   const [deleted, setDeleted] = useState<boolean>(true);

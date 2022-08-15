@@ -1,10 +1,4 @@
-import express, {
-  Application,
-  Request,
-  Response,
-  NextFunction,
-  urlencoded,
-} from "express";
+import express, { Application, Request, Response, NextFunction } from "express";
 import config from "./config/config";
 import cors from "cors";
 
@@ -13,6 +7,7 @@ import dbConnect from "./database/dbConnect";
 //router
 import postRouter from "./routes/postRouter";
 import uploadRouter from "./routes/pdfRouter";
+import userRouter from "./routes/userRouter";
 
 const app: Application = express();
 const port = process.env.PORT || config.port;
@@ -23,6 +18,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use("/api", postRouter);
 app.use("/api", uploadRouter);
+app.use("/api", userRouter);
 
 app.get("/", (req: Request, res: Response, next: NextFunction) => {
   res.send("🟢 Server Online");
