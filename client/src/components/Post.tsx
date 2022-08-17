@@ -61,6 +61,7 @@ const Post: React.FC<Props> = ({ post, deleted, setDeleted }) => {
       console.log(error);
     }
   };
+  
   return (
     <Card className="post_container">
       <CardHeader
