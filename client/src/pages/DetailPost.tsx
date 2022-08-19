@@ -9,16 +9,8 @@ import "./style.css";
 import Upload from "../utils/Upload";
 import { useNavigate, useParams } from "react-router-dom";
 import Loader from "../components/Loader";
-const Buffer = require("buffer").Buffer;
-
-const initialValues = {
-  title: "",
-  desc: "",
-  picture: "",
-  userName: "Harsh",
-  userImage: "",
-  userEmail: "",
-};
+import { useSelector, useDispatch } from "react-redux";
+import { getPost } from "../redux/actions/posts";
 
 const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
   props,
@@ -28,14 +20,21 @@ const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
 });
 
 const DetailPost = () => {
-  const [post, setPost] = useState(initialValues);
-  const [image, setImage] = useState<string>("");
+  const dispatch = useDispatch();
+  const post = useSelector((state: any) => state.post.post);
+
   const [showLoader, setShowLoader] = useState<boolean>(true);
   const navigate = useNavigate();
-  const url: string = image
-    ? image
+  const url: string = post.picture
+    ? post.picture
     : "https://w.wallhaven.cc/full/od/wallhaven-od1wvl.png";
   const params = useParams();
+  console.log(params.id);
+
+  useEffect(() => {
+    dispatch(getPost(params.id));
+    setShowLoader(false);
+  }, [params]);
 
   /* snackbar */
   const [open1, setOpen1] = useState({
@@ -47,19 +46,6 @@ const DetailPost = () => {
   const handleClose = () => {
     setOpen1({ ...open1, open: false, vertical: "top", horizontal: "right" });
   };
-
-  useEffect(() => {
-    const fetchData = async () => {
-      const response = await axios.get(
-        `${config.server}/api/post/${params.id}`
-      );
-      const oldPost = response.data.data;
-      setPost(oldPost);
-      setImage(oldPost.picture);
-    };
-    fetchData();
-    setShowLoader(false);
-  }, []);
 
   const generatePdf = async () => {
     setOpen1({ ...open1, open: true, vertical: "top", horizontal: "right" });

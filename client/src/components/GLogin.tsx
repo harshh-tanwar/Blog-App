@@ -1,18 +1,20 @@
-import React, { useState, useContext, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import "../utils/firebase";
 import { getAuth, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
-import config from "../config/config";
 import { Button } from "@mui/material";
 import googleLogo from "../assets/google-logo.png";
+import { useSelector, useDispatch } from "react-redux";
+import { getUser } from "../redux/actions/users";
 
 const GLogin = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  const loggedUser = useSelector((state: any) => state.user.user);
 
   const loginWithGoogle = async () => {
     try {
-      console.log("Hello");
       const provider = new GoogleAuthProvider();
       const auth = getAuth();
       const result = await signInWithPopup(auth, provider);
@@ -29,17 +31,13 @@ const GLogin = () => {
         userImage: user.photoURL,
       };
 
-      const userDetails = await axios.post(
-        `${config.server}/api/users`,
-        userData
-      );
-      console.log(userDetails);
+      dispatch(getUser(userData));
 
-      localStorage.setItem("token", JSON.stringify(userDetails.data.token));
-      localStorage.setItem("user-data", JSON.stringify(userDetails.data.user));
+      /* localStorage.setItem("token", JSON.stringify(loggedUser.token));
+        localStorage.setItem("user-data", JSON.stringify(loggedUser.user)); */
 
       navigate("/");
-      /* } */
+      /*  } */
     } catch (error) {
       console.log(`Error ${error}`);
     }

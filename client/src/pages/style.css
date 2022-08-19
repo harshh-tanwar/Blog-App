@@ -55,8 +55,12 @@
 
 /* error __________*/
 .error-container{
-  height: 50vh;
-  margin-top: 10vh;
+  height: 90vh;
+  padding-top: 10vh;
+  background-color: white;
+}
+.error-items-container{
+  height: 40vh;
   display: flex;
   flex-direction: column;
   justify-content: center;

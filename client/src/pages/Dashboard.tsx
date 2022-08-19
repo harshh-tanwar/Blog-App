@@ -6,6 +6,8 @@ import MuiAlert, { AlertProps } from "@mui/material/Alert";
 import Post from "../components/Post";
 import Header from "../components/Header";
 import Loader from "../components/Loader";
+import { useSelector, useDispatch } from "react-redux";
+import { userPosts } from "../redux/actions/posts";
 
 const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
   props,
@@ -15,22 +17,11 @@ const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
 });
 
 const Dashboard = () => {
-  const [posts, setPosts] = useState<
-    {
-      _id: string;
-      title: string;
-      desc: string;
-      picture: string;
-      createdAt: string;
-      userName: string;
-      userImage: string;
-      userEmail: string;
-    }[]
-  >([]);
+  const dispatch = useDispatch();
+  const posts = useSelector((state: any) => state.userPosts.userposts);
+  const user = useSelector((state: any) => state.user.user.user);
   const [showLoader, setShowLoader] = useState<boolean>(true);
-  const [postCount, setPostCount] = useState<number>(0);
   const [deleted, setDeleted] = useState<boolean>(false);
-  var user = JSON.parse(localStorage.getItem("user-data"));
 
   /* snackbar */
   const [open1, setOpen1] = useState({
@@ -45,15 +36,7 @@ const Dashboard = () => {
   };
 
   useEffect(() => {
-    const fetchData = async () => {
-      let response = await axios.get(
-        `${config.server}/api/posts?userId=${user._id}`
-      );
-      console.log(response.data.data);
-      setPosts(response.data.data);
-      setPostCount(response.data.count);
-    };
-    fetchData();
+    dispatch(userPosts(user._id));
     setDeleted(false);
     if (deleted === true) {
       setOpen1({ ...open1, open: true, vertical: "top", horizontal: "right" });
@@ -88,10 +71,10 @@ const Dashboard = () => {
               <img src={user.userImage} alt="userImage" width="200px" />
               <h1>{user.name}</h1>
               <h3>{user.email}</h3>
-              <h3>User Posts - {postCount}</h3>
+              <h3>User Posts - {posts.length}</h3>
             </div>
             <div className="dashPost_container">
-              {posts.reverse().map((post) => (
+              {posts.map((post: any) => (
                 <Post post={post} deleted={deleted} setDeleted={setDeleted} />
               ))}
             </div>

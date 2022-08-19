@@ -5,10 +5,12 @@ import Posts from "../components/Posts";
 import { Button } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import Loader from "../components/Loader";
+import { useSelector } from "react-redux";
 
 const Home = () => {
   const navigate = useNavigate();
   const [showLoader, setShowLoader] = useState<boolean>(true);
+  const user = useSelector((state: any) => state.user.user.user);
 
   useEffect(() => {
     setShowLoader(false);
@@ -16,20 +18,29 @@ const Home = () => {
   return (
     <>
       <Header />
-      {showLoader ? (
-        <Loader />
-      ) : (
+      {!user && (
+        <h1 style={{ textAlign: "center", paddingTop: "10vh" }}>
+          Login to see Blogs
+        </h1>
+      )}
+      {user && (
         <>
-          <Banner />
-          <Button
-            variant="contained"
-            size="large"
-            onClick={() => navigate("/create")}
-            style={{ margin: "10px 0 10px 10vw" }}
-          >
-            <strong>Create Blog</strong>
-          </Button>
-          <Posts />
+          {showLoader ? (
+            <Loader />
+          ) : (
+            <>
+              <Banner />
+              <Button
+                variant="contained"
+                size="large"
+                onClick={() => navigate("/create")}
+                style={{ margin: "10px 0 10px 10vw" }}
+              >
+                <strong>Create Blog</strong>
+              </Button>
+              <Posts />
+            </>
+          )}
         </>
       )}
     </>

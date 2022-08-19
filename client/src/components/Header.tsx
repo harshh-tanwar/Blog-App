@@ -4,23 +4,22 @@ import { AppBar, Container, Avatar, IconButton, Button } from "@mui/material";
 import logo from "../assets/ttn-logo-name.png";
 import GLogin from "./GLogin";
 import { ExitToApp } from "@mui/icons-material";
+import { useSelector, useDispatch } from "react-redux";
+import { removeUser } from "../redux/actions/users";
 
 const Header = () => {
   const [loggedIn, setLoggedIn] = useState<boolean>(false);
   const navigate = useNavigate();
 
-  var user = JSON.parse(localStorage.getItem("user-data"));
+  const dispatch = useDispatch();
+  const loggedUser = useSelector((state: any) => state.user.user.user);
+  /*  console.log(loggedUser); */
 
-  useEffect(() => {
-    if (user) {
-      setLoggedIn(true);
-    }
-  });
   useEffect(() => {}, [loggedIn]);
 
   const Logout = () => {
-    localStorage.clear();
-    setLoggedIn(false);
+    dispatch(removeUser());
+    setLoggedIn((p) => !p);
   };
 
   return (
@@ -50,18 +49,21 @@ const Header = () => {
           alignItems: "center",
         }}
       >
-        {user ? (
+        {loggedUser ? (
           <>
-            <Button variant="outlined" onClick={() => navigate(`/user/${user._id}`)}>
+            <Button
+              variant="outlined"
+              onClick={() => navigate(`/user/${loggedUser._id}`)}
+            >
               Dashboard
             </Button>
             <IconButton>
               <Avatar
                 style={{ height: "40px", width: "40px" }}
-                src={user.userImage}
+                src={loggedUser.userImage}
               />
             </IconButton>
-            <p>{user.name}</p>
+            <p>{loggedUser.name}</p>
             <Button variant="outlined" color="error" onClick={Logout}>
               <ExitToApp style={{ color: "peach" }} />
               ㅤLogout

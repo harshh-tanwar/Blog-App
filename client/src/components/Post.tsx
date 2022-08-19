@@ -17,6 +17,7 @@ import config from "../config/config";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 interface Props {
   post: {
@@ -35,7 +36,7 @@ interface Props {
 
 const Post: React.FC<Props> = ({ post, deleted, setDeleted }) => {
   const [anchorEl, setAnchorEl] = useState(null);
-  var user = JSON.parse(localStorage.getItem("user-data"));
+  const user = useSelector((state: any) => state.user.user.user);
   const image = post.picture
     ? post.picture
     : "https://w.wallhaven.cc/full/od/wallhaven-od1wvl.png";
@@ -61,7 +62,7 @@ const Post: React.FC<Props> = ({ post, deleted, setDeleted }) => {
       console.log(error);
     }
   };
-  
+
   return (
     <Card className="post_container">
       <CardHeader

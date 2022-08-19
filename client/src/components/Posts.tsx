@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react";
 import Post from "./Post";
-import config from "../config/config";
-import axios from "axios";
 import "./style.css";
 import { Snackbar } from "@mui/material";
 import MuiAlert, { AlertProps } from "@mui/material/Alert";
+import { useSelector, useDispatch } from "react-redux";
+import { getPosts } from "../redux/actions/posts";
 
 const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
   props,
@@ -14,18 +14,8 @@ const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
 });
 
 const Posts = () => {
-  const [posts, setPosts] = useState<
-    {
-      _id: string;
-      title: string;
-      desc: string;
-      picture: string;
-      createdAt: string;
-      userName: string;
-      userImage: string;
-      userEmail: string;
-    }[]
-  >([]);
+  const dispatch = useDispatch();
+  const posts = useSelector((state: any) => state.posts.posts);
   const [deleted, setDeleted] = useState<boolean>(false);
 
   /* snackbar */
@@ -41,12 +31,7 @@ const Posts = () => {
   };
 
   useEffect(() => {
-    const fetchData = async () => {
-      let response = await axios.get(`${config.server}/api/posts`);
-      console.log(response.data.data);
-      setPosts(response.data.data);
-    };
-    fetchData();
+    dispatch(getPosts());
     setDeleted(false);
     if (deleted === true) {
       setOpen1({ ...open1, open: true, vertical: "top", horizontal: "right" });
@@ -67,8 +52,13 @@ const Posts = () => {
           Post Deleted
         </Alert>
       </Snackbar>
-      {posts.reverse().map((post) => (
-        <Post post={post} deleted={deleted} setDeleted={setDeleted} />
+      {posts.reverse().map((post: any) => (
+        <Post
+          post={post}
+          deleted={deleted}
+          setDeleted={setDeleted}
+          key={post._id}
+        />
       ))}
     </div>
   );
