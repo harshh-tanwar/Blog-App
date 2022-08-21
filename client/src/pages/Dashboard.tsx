@@ -8,6 +8,7 @@ import Header from "../components/Header";
 import Loader from "../components/Loader";
 import { useSelector, useDispatch } from "react-redux";
 import { userPosts } from "../redux/actions/posts";
+import { useNavigate } from "react-router-dom";
 
 const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
   props,
@@ -22,6 +23,7 @@ const Dashboard = () => {
   const user = useSelector((state: any) => state.user.user.user);
   const [showLoader, setShowLoader] = useState<boolean>(true);
   const [deleted, setDeleted] = useState<boolean>(false);
+  const navigate = useNavigate();
 
   /* snackbar */
   const [open1, setOpen1] = useState({
@@ -36,6 +38,10 @@ const Dashboard = () => {
   };
 
   useEffect(() => {
+    if (!user) {
+      navigate("*");
+      return;
+    }
     dispatch(userPosts(user._id));
     setDeleted(false);
     if (deleted === true) {
@@ -75,7 +81,12 @@ const Dashboard = () => {
             </div>
             <div className="dashPost_container">
               {posts.map((post: any) => (
-                <Post post={post} deleted={deleted} setDeleted={setDeleted} />
+                <Post
+                  post={post}
+                  deleted={deleted}
+                  setDeleted={setDeleted}
+                  key={post.id}
+                />
               ))}
             </div>
           </div>

@@ -6,6 +6,7 @@ import MuiAlert, { AlertProps } from "@mui/material/Alert";
 import { useSelector, useDispatch } from "react-redux";
 import { getPosts } from "../redux/actions/posts";
 
+
 const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
   props,
   ref
@@ -52,7 +53,7 @@ const Posts = () => {
           Post Deleted
         </Alert>
       </Snackbar>
-      {posts.reverse().map((post: any) => (
+      {posts.map((post: any) => (
         <Post
           post={post}
           deleted={deleted}

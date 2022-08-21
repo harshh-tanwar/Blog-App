@@ -20,7 +20,7 @@ const Home = () => {
       <Header />
       {!user && (
         <h1 style={{ textAlign: "center", paddingTop: "10vh" }}>
-          Login to see Blogs
+          Login to access content.
         </h1>
       )}
       {user && (

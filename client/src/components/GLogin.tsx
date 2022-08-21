@@ -33,9 +33,6 @@ const GLogin = () => {
 
       dispatch(getUser(userData));
 
-      /* localStorage.setItem("token", JSON.stringify(loggedUser.token));
-        localStorage.setItem("user-data", JSON.stringify(loggedUser.user)); */
-
       navigate("/");
       /*  } */
     } catch (error) {

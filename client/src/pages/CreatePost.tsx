@@ -51,20 +51,23 @@ const CreatePost = () => {
   };
 
   useEffect(() => {
-    console.log(loggedUser);
-    post.userImage = loggedUser.userImage;
-    post.userName = loggedUser.name;
-    post.userEmail = loggedUser.email;
-    const getImage = async () => {
-      if (file) {
-        const name = `${new Date().getTime()}_${file.name}`;
-        const image = await Upload(file, name);
-        setImage(image);
-        post.picture = image;
-      }
-    };
-    getImage();
-    setShowLoader(false);
+    if (loggedUser == undefined || loggedUser == null) {
+      navigate("/");
+    } else {
+      post.userImage = loggedUser.userImage;
+      post.userName = loggedUser.name;
+      post.userEmail = loggedUser.email;
+      const getImage = async () => {
+        if (file) {
+          const name = `${new Date().getTime()}_${file.name}`;
+          const image = await Upload(file, name);
+          setImage(image);
+          post.picture = image;
+        }
+      };
+      getImage();
+      setShowLoader(false);
+    }
   }, [file]);
 
   const handleChange = (e: any) => {
@@ -110,8 +113,7 @@ const CreatePost = () => {
 
   return (
     <>
-    {!loggedUser && navigate("/")}
-      {loggedUser && (
+      {loggedUser != undefined && (
         <>
           <Header />
           {showLoader ? (

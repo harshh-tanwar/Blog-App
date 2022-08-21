@@ -17,7 +17,8 @@ import config from "../config/config";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { deletePost } from "../redux/actions/posts";
 
 interface Props {
   post: {
@@ -35,6 +36,7 @@ interface Props {
 }
 
 const Post: React.FC<Props> = ({ post, deleted, setDeleted }) => {
+  const dispatch = useDispatch();
   const [anchorEl, setAnchorEl] = useState(null);
   const user = useSelector((state: any) => state.user.user.user);
   const image = post.picture
@@ -53,11 +55,10 @@ const Post: React.FC<Props> = ({ post, deleted, setDeleted }) => {
     setAnchorEl(null);
   };
 
-  const deletePost = async (id: number) => {
+  const deletePost1 = async (id: any) => {
     try {
-      const res = await axios.delete(`${config.server}/api/delete/${id}`);
+      dispatch(deletePost(id));
       setDeleted(true);
-      console.log(res.data);
     } catch (error) {
       console.log(error);
     }
@@ -86,7 +87,7 @@ const Post: React.FC<Props> = ({ post, deleted, setDeleted }) => {
                       message="Delete"
                       modalHeader="Confirmation !"
                       modalMessage="Do you want to delete the post?"
-                      func={deletePost}
+                      func={deletePost1}
                       id={id}
                     />
                     <Delete style={{ color: "red" }} />

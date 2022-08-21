@@ -1,4 +1,5 @@
 import express, { Router, Request, Response, NextFunction } from "express";
+import auth from "../middleware/auth";
 
 //controllers
 import {
@@ -15,14 +16,14 @@ router.get("/", (req: Request, res: Response) => {
   res.send("🟢 Posts Api Working");
 });
 
-router.post("/create", createPost);
+router.post("/create", auth, createPost);
 
-router.get("/posts", getPosts);
+router.get("/posts", auth, getPosts);
 
-router.get("/post/:id", getPost);
+router.get("/post/:id", auth, getPost);
 
-router.delete("/delete/:id", deletePost);
+router.delete("/delete/:id", auth, deletePost);
 
-router.put("/update/:id", updatePost);
+router.put("/update/:id", auth, updatePost);
 
 export default router;

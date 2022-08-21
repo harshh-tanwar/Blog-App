@@ -25,3 +25,9 @@ export function userPosts(id: string) {
     payload: id,
   };
 }
+export function deletePost(id: string) {
+  return {
+    type: type.DELETE_POST_REQUIRED,
+    payload: id,
+  };
+}

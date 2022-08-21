@@ -10,16 +10,18 @@ import { removeUser } from "../redux/actions/users";
 const Header = () => {
   const [loggedIn, setLoggedIn] = useState<boolean>(false);
   const navigate = useNavigate();
-
   const dispatch = useDispatch();
   const loggedUser = useSelector((state: any) => state.user.user.user);
   /*  console.log(loggedUser); */
+  const token = useSelector((state: any) => state.user.user.token);
 
   useEffect(() => {}, [loggedIn]);
 
   const Logout = () => {
     dispatch(removeUser());
     setLoggedIn((p) => !p);
+    localStorage.removeItem("token");
+    navigate("/");
   };
 
   return (

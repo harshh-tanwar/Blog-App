@@ -37,7 +37,7 @@ const initailPostState: type.initialPost = {
 export function post(state = initailPostState, action: any) {
   switch (action.type) {
     case type.GET_POST_REQUESTED:
-      console.log("oof")
+      console.log("oof");
       return {
         ...state,
         loading: true,
@@ -49,6 +49,17 @@ export function post(state = initailPostState, action: any) {
         post: action.post,
       };
     case type.GET_POST_FAILED:
+      return {
+        ...state,
+        loading: false,
+        error: action.message,
+      };
+    case type.DELETE_POST_REQUIRED:
+      return {
+        ...state,
+        loading: true,
+      };
+    case type.DELETE_POST_FAILED:
       return {
         ...state,
         loading: false,

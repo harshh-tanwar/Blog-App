@@ -7,10 +7,8 @@ const apiUrl = `${config.server}/api`;
 /* get one user */
 const getUser = async (userData: any) => {
   try {
-    const userDetails = await axios.post(
-      `${config.server}/api/users`,
-      userData
-    );
+    const userDetails = await axios.post(`${apiUrl}/users`, userData);
+    localStorage.setItem("token", JSON.stringify(userDetails.data.token));
     return userDetails.data;
   } catch (error) {
     return error;
