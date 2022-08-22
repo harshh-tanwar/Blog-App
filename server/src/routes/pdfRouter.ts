@@ -1,4 +1,4 @@
-import express, { Router, Request, Response, NextFunction } from "express";
+import express, { Router, Request, Response } from "express";
 
 //controllers
 import { generatePdf } from "../controllers/pdfController";

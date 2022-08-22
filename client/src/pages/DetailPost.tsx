@@ -21,7 +21,7 @@ const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
 
 const DetailPost = () => {
   const dispatch = useDispatch();
-  const post = useSelector((state: any) => state.post.post);
+  const post = useSelector((state: any) => state.posts.post);
 
   const [showLoader, setShowLoader] = useState<boolean>(true);
   const navigate = useNavigate();

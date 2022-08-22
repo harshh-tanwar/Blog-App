@@ -9,6 +9,8 @@ import "./style.css";
 import Upload from "../utils/Upload";
 import { useNavigate, useParams } from "react-router-dom";
 import Loader from "../components/Loader";
+import { updatePost } from "../redux/actions/posts";
+import { useDispatch } from "react-redux";
 
 const initialValues = {
   title: "",
@@ -27,6 +29,7 @@ const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
 });
 
 const UpdatePost = () => {
+  const dispatch = useDispatch();
   const [post, setPost] = useState(initialValues);
   const [file, setFile] = useState<File>();
   const [image, setImage] = useState<string>("");
@@ -51,11 +54,15 @@ const UpdatePost = () => {
   };
 
   useEffect(() => {
+    const token = JSON.parse(localStorage.getItem("token"));
+
     const fetchData = async () => {
-      const response = await axios.get(
-        `${config.server}/api/post/${params.id}`
-      );
-      const oldPost = response.data.data;
+      const res = await axios.get(`${config.server}/api/post/${params.id}`, {
+        headers: {
+          "x-auth-token": token,
+        },
+      });
+      const oldPost = res.data.data;
       setPost(oldPost);
       setImage(oldPost.picture);
     };
@@ -103,10 +110,7 @@ const UpdatePost = () => {
       });
       return;
     }
-    const res = await axios.put(
-      `${config.server}/api/update/${params.id}`,
-      post
-    );
+    dispatch(updatePost(params.id, post));
     setOpen1({
       ...open1,
       open: true,
@@ -115,7 +119,6 @@ const UpdatePost = () => {
       message: "Post Updated",
       status: "success",
     });
-    console.log(res.data);
     setTimeout(() => navigate("/"), 2000);
   };
 

@@ -19,7 +19,7 @@ const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
 
 const Dashboard = () => {
   const dispatch = useDispatch();
-  const posts = useSelector((state: any) => state.userPosts.userposts);
+  const posts = useSelector((state: any) => state.posts.userposts);
   const user = useSelector((state: any) => state.user.user.user);
   const [showLoader, setShowLoader] = useState<boolean>(true);
   const [deleted, setDeleted] = useState<boolean>(false);

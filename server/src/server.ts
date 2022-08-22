@@ -1,4 +1,4 @@
-import express, { Application, Request, Response, NextFunction } from "express";
+import express, { Application, Request, Response } from "express";
 import config from "./config/config";
 import cors from "cors";
 
@@ -20,7 +20,7 @@ app.use("/api", postRouter);
 app.use("/api", uploadRouter);
 app.use("/api", userRouter);
 
-app.get("/", (req: Request, res: Response, next: NextFunction) => {
+app.get("/", (req: Request, res: Response) => {
   res.send("🟢 Server Online");
 });
 

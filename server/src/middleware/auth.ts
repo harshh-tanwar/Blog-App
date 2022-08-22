@@ -1,4 +1,4 @@
-import express, { Application, Request, Response, NextFunction } from "express";
+import express, { Request, Response, NextFunction } from "express";
 import config from "../config/config";
 import jwt from "jsonwebtoken";
 
@@ -8,8 +8,7 @@ const auth = (req: Request, res: Response, next: NextFunction) => {
   if (!token) return res.status(400).send("No token Provided");
   try {
     const decoded = jwt.verify(token, config.jwtPrivateKey);
-    /* req.user = decoded; */
-    /*  console.log(decoded, req.user); */
+    /*  console.log(decoded); */
     next();
   } catch (error) {
     res.status(400).send("Invalid token");

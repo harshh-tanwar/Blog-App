@@ -7,7 +7,6 @@ export function getPosts(posts?: any) {
   };
 }
 export function getPost(id: string) {
-  console.log("Action")
   return {
     type: type.GET_POST_REQUESTED,
     payload: id,
@@ -21,13 +20,19 @@ export function createPost(postData: any) {
 }
 export function userPosts(id: string) {
   return {
-    type: type.GET_USER_POST_REQUIRED,
+    type: type.GET_USER_POST_REQUESTED,
     payload: id,
   };
 }
 export function deletePost(id: string) {
   return {
-    type: type.DELETE_POST_REQUIRED,
+    type: type.DELETE_POST_REQUESTED,
     payload: id,
+  };
+}
+export function updatePost(id: string, data: any) {
+  return {
+    type: type.UPDATE_POST_REQUESTED,
+    payload: { id, data },
   };
 }

@@ -15,30 +15,26 @@ export const CREATE_POST_REQUESTED = "CREATE_POST_REQUESTED";
 export const CREATE_POST_SUCCESS = "CREATE_POST_SUCCESS";
 export const CREATE_POST_FAILED = "CREATE_POST_FAILED";
 
-export const GET_USER_POST_REQUIRED = "GET_USER_POST_REQUIRED";
+export const GET_USER_POST_REQUESTED = "GET_USER_POST_REQUIRED";
 export const GET_USER_POST_SUCCESS = "GET_USER_POST_SUCCESS";
 export const GET_USER_POST_FAILED = "GET_USER_POST_FAILED";
 
-export const DELETE_POST_REQUIRED = "DELETE_POST_REQUIRED";
+export const DELETE_POST_REQUESTED = "DELETE_POST_REQUIRED";
 export const DELETE_POST_SUCCESS = "DELETE_POST_SUCCESS";
 export const DELETE_POST_FAILED = "DELETE_POST_FAILED";
 
+export const UPDATE_POST_REQUESTED = "UPDATE_POST_REQUIRED";
+export const UPDATE_POST_SUCCESS = "UPDATE_POST_SUCCESS";
+export const UPDATE_POST_FAILED = "UPDATE_POST_FAILED";
+
 export interface initialPosts {
   posts: any;
-  loading: boolean;
-  error: null;
-}
-export interface initialPost {
   post: any;
+  userPosts: any;
   loading: boolean;
   error: null;
 }
 export interface initialUser {
   user: any;
-  error: null;
-}
-export interface initialUserPosts {
-  userposts: any;
-  loading: boolean;
   error: null;
 }

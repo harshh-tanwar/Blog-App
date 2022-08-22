@@ -38,7 +38,6 @@ const getPost = async (id: string) => {
         "x-auth-token": token,
       },
     });
-    console.log(res.data.data);
     return res.data.data;
   } catch (error) {
     return error;
@@ -129,12 +128,38 @@ function* deletePost(action) {
   }
 }
 
+/* delete post */
+const upPost = async ({ id, data }: any) => {
+  try {
+    const token = JSON.parse(localStorage.getItem("token"));
+    const res = await axios.put(`${config.server}/api/update/${id}`, data, {
+      headers: {
+        "x-auth-token": token,
+      },
+    });
+    return res.data.data;
+  } catch (error) {
+    return error;
+  }
+};
+// @ts-ignore
+function* updatePost(action) {
+  try {
+    //@ts-ignore
+    const deletedPost = yield call(upPost, action.payload);
+    yield put({ type: "DELETE_POST_SUCCESS", post: deletedPost });
+  } catch (error) {
+    yield put({ type: "DELETE_POST_FAILED", message: error });
+  }
+}
+
 function* postSaga() {
   yield takeEvery("GET_POSTS_REQUESTED", fetchPosts);
   yield takeEvery("GET_POST_REQUESTED", fetchPost);
   yield takeEvery("CREATE_POST_REQUESTED", createPost);
   yield takeEvery("GET_USER_POST_REQUIRED", userPosts);
   yield takeEvery("DELETE_POST_REQUIRED", deletePost);
+  yield takeEvery("UPDATE_POST_REQUIRED", updatePost);
 }
 
 export default postSaga;

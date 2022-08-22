@@ -2,11 +2,14 @@ import * as type from "../types";
 
 const initailPostsState: type.initialPosts = {
   posts: [],
+  post: {},
+  userPosts: [],
   loading: false,
   error: null,
 };
 export function posts(state = initailPostsState, action: any) {
   switch (action.type) {
+    //all posts
     case type.GET_POSTS_REQUESTED:
       return {
         ...state,
@@ -24,20 +27,8 @@ export function posts(state = initailPostsState, action: any) {
         loading: false,
         error: action.message,
       };
-    default:
-      return state;
-  }
-}
-
-const initailPostState: type.initialPost = {
-  post: {},
-  loading: false,
-  error: null,
-};
-export function post(state = initailPostState, action: any) {
-  switch (action.type) {
+      //single post
     case type.GET_POST_REQUESTED:
-      console.log("oof");
       return {
         ...state,
         loading: true,
@@ -54,7 +45,8 @@ export function post(state = initailPostState, action: any) {
         loading: false,
         error: action.message,
       };
-    case type.DELETE_POST_REQUIRED:
+      //delete post
+    case type.DELETE_POST_REQUESTED:
       return {
         ...state,
         loading: true,
@@ -65,13 +57,7 @@ export function post(state = initailPostState, action: any) {
         loading: false,
         error: action.message,
       };
-    default:
-      return state;
-  }
-}
-
-export function createPost(state = initailPostState, action: any) {
-  switch (action.type) {
+      //create post
     case type.CREATE_POST_REQUESTED:
       return {
         ...state,
@@ -81,7 +67,6 @@ export function createPost(state = initailPostState, action: any) {
       return {
         ...state,
         loading: false,
-        post: action.post,
       };
     case type.CREATE_POST_FAILED:
       return {
@@ -89,19 +74,8 @@ export function createPost(state = initailPostState, action: any) {
         loading: false,
         error: action.message,
       };
-    default:
-      return state;
-  }
-}
-
-const initailUserPostsState: type.initialUserPosts = {
-  userposts: [],
-  loading: false,
-  error: null,
-};
-export function userPosts(state = initailUserPostsState, action: any) {
-  switch (action.type) {
-    case type.GET_USER_POST_REQUIRED:
+      //user posts
+    case type.GET_USER_POST_REQUESTED:
       return {
         ...state,
         loading: true,
@@ -113,6 +87,23 @@ export function userPosts(state = initailUserPostsState, action: any) {
         userposts: action.userposts,
       };
     case type.GET_USER_POST_FAILED:
+      return {
+        ...state,
+        loading: false,
+        error: action.message,
+      };
+      //update post
+    case type.UPDATE_POST_REQUESTED:
+      return {
+        ...state,
+        loading: true,
+      };
+    case type.UPDATE_POST_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+      };
+    case type.UPDATE_POST_FAILED:
       return {
         ...state,
         loading: false,
