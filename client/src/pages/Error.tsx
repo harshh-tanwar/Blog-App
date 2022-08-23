@@ -1,4 +1,3 @@
-import React from "react";
 import Loader from "../components/Loader";
 import { Button } from "@mui/material";
 import { useNavigate } from "react-router-dom";

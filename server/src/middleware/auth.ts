@@ -1,4 +1,4 @@
-import express, { Request, Response, NextFunction } from "express";
+import { Request, Response, NextFunction } from "express";
 import config from "../config/config";
 import jwt from "jsonwebtoken";
 
@@ -7,7 +7,7 @@ const auth = (req: Request, res: Response, next: NextFunction) => {
   /* console.log(`Token - ${token}`); */
   if (!token) return res.status(400).send("No token Provided");
   try {
-    const decoded = jwt.verify(token, config.jwtPrivateKey);
+    jwt.verify(token, config.jwtPrivateKey);
     /*  console.log(decoded); */
     next();
   } catch (error) {

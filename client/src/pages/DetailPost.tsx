@@ -1,12 +1,10 @@
 import React, { useState, useEffect } from "react";
 import Header from "../components/Header";
-import { TextField, IconButton, Button, Snackbar } from "@mui/material";
+import { Button, Snackbar } from "@mui/material";
 import MuiAlert, { AlertProps } from "@mui/material/Alert";
-import { PhotoCamera } from "@mui/icons-material";
 import axios from "axios";
 import config from "../config/config";
 import "./style.css";
-import Upload from "../utils/Upload";
 import { useNavigate, useParams } from "react-router-dom";
 import Loader from "../components/Loader";
 import { useSelector, useDispatch } from "react-redux";

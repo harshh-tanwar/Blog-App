@@ -1,6 +1,6 @@
-const puppeteer = require("puppeteer");
+import puppeteer from "puppeteer";
 
-const getPdf = async (url: any) => {
+const getPdf = async (url: string) => {
   const browser = await puppeteer.launch();
 
   const page = await browser.newPage();

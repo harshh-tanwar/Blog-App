@@ -4,16 +4,18 @@ import { TextField, IconButton, Button, Snackbar } from "@mui/material";
 import MuiAlert, { AlertProps } from "@mui/material/Alert";
 import { PhotoCamera } from "@mui/icons-material";
 import "./style.css";
-import Upload from "../utils/Upload";
+import { Upload } from "../utils/Upload";
 import { useNavigate } from "react-router-dom";
 import Loader from "../components/Loader";
 import { useDispatch, useSelector } from "react-redux";
 import { createPost } from "../redux/actions/posts";
+import { initPost } from "./types";
 
-const initialValues = {
+const initialValues: initPost = {
   title: "",
   desc: "",
   picture: "",
+  pictureId: "",
   userName: "Harsh",
   userImage: "",
   userEmail: "",
@@ -51,7 +53,7 @@ const CreatePost = () => {
   };
 
   useEffect(() => {
-    if (loggedUser == undefined || loggedUser == null) {
+    if (loggedUser === undefined || loggedUser === null) {
       navigate("/");
     } else {
       post.userImage = loggedUser.userImage;
@@ -61,8 +63,10 @@ const CreatePost = () => {
         if (file) {
           const name = `${new Date().getTime()}_${file.name}`;
           const image = await Upload(file, name);
-          setImage(image);
-          post.picture = image;
+          setImage(image.location);
+          post.picture = image.location;
+          console.log(image.key);
+          post.pictureId = image.key;
         }
       };
       getImage();
@@ -76,7 +80,7 @@ const CreatePost = () => {
 
   const savePost = async () => {
     console.log(post);
-    if (post.title == "") {
+    if (post.title === "") {
       setOpen1({
         ...open1,
         open: true,
@@ -87,7 +91,7 @@ const CreatePost = () => {
       });
       return;
     }
-    if (post.desc == "") {
+    if (post.desc === "") {
       setOpen1({
         ...open1,
         open: true,
@@ -113,7 +117,7 @@ const CreatePost = () => {
 
   return (
     <>
-      {loggedUser != undefined && (
+      {loggedUser !== undefined && (
         <>
           <Header />
           {showLoader ? (

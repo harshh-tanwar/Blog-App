@@ -1,6 +1,4 @@
 import React, { useState, useEffect } from "react";
-import axios from "axios";
-import config from "../config/config";
 import { Snackbar } from "@mui/material";
 import MuiAlert, { AlertProps } from "@mui/material/Alert";
 import Post from "../components/Post";
@@ -19,7 +17,7 @@ const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
 
 const Dashboard = () => {
   const dispatch = useDispatch();
-  const posts = useSelector((state: any) => state.posts.userposts);
+  const posts = useSelector((state: any) => state.posts.userPosts);
   const user = useSelector((state: any) => state.user.user.user);
   const [showLoader, setShowLoader] = useState<boolean>(true);
   const [deleted, setDeleted] = useState<boolean>(false);
@@ -85,7 +83,7 @@ const Dashboard = () => {
                   post={post}
                   deleted={deleted}
                   setDeleted={setDeleted}
-                  key={post.id}
+                  key={post._id}
                 />
               ))}
             </div>

@@ -23,7 +23,6 @@ app.use("/api", userRouter);
 app.get("/", (req: Request, res: Response) => {
   res.send("🟢 Server Online");
 });
-
 app.listen(port, () => console.log(`🟢 Running on http://localhost:${port}`));
 
 dbConnect();

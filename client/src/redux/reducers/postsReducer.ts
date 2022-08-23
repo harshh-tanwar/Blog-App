@@ -84,7 +84,7 @@ export function posts(state = initailPostsState, action: any) {
       return {
         ...state,
         loading: false,
-        userposts: action.userposts,
+        userPosts: action.userposts,
       };
     case type.GET_USER_POST_FAILED:
       return {

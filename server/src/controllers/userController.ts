@@ -15,7 +15,7 @@ export const getUser = async (req: Request, res: Response) => {
 
 //register user
 export const registerUser = async (req: Request, res: Response) => {
-  const { name, email, google, userImage } = req.body;
+  const { name, email,userImage } = req.body;
   try {
     let user = await User.findOne({ email: email });
     if (user) {

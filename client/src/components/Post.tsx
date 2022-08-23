@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import {
   Card,
   CardHeader,
@@ -10,15 +10,13 @@ import {
   MenuItem,
 } from "@mui/material";
 import { MoreVert, Delete, Edit } from "@mui/icons-material";
-import banner from "../assets/banner.jpg";
 import "./style.css";
 import Modal from "./Modal";
-import config from "../config/config";
-import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { deletePost } from "../redux/actions/posts";
+import {DeletePic} from "../utils/Upload";
 
 interface Props {
   post: {
@@ -26,6 +24,7 @@ interface Props {
     title: string;
     desc: string;
     picture: string;
+    pictureId: string;
     createdAt: string;
     userName: string;
     userImage: string;
@@ -57,6 +56,7 @@ const Post: React.FC<Props> = ({ post, deleted, setDeleted }) => {
 
   const deletePost1 = async (id: any) => {
     try {
+      await DeletePic(post.pictureId)
       dispatch(deletePost(id));
       setDeleted(true);
     } catch (error) {

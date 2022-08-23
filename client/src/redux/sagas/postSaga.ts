@@ -146,8 +146,8 @@ const upPost = async ({ id, data }: any) => {
 function* updatePost(action) {
   try {
     //@ts-ignore
-    const deletedPost = yield call(upPost, action.payload);
-    yield put({ type: "DELETE_POST_SUCCESS", post: deletedPost });
+    const updatedPost = yield call(upPost, action.payload);
+    yield put({ type: "DELETE_POST_SUCCESS", post: updatedPost });
   } catch (error) {
     yield put({ type: "DELETE_POST_FAILED", message: error });
   }

@@ -6,21 +6,22 @@ import { PhotoCamera } from "@mui/icons-material";
 import axios from "axios";
 import config from "../config/config";
 import "./style.css";
-import Upload from "../utils/Upload";
+import { Upload } from "../utils/Upload";
 import { useNavigate, useParams } from "react-router-dom";
 import Loader from "../components/Loader";
 import { updatePost } from "../redux/actions/posts";
 import { useDispatch } from "react-redux";
+import { initPost } from "./types";
 
-const initialValues = {
+const initialValues: initPost = {
   title: "",
   desc: "",
   picture: "",
+  pictureId: "",
   userName: "Harsh",
   userImage: "",
   userEmail: "",
 };
-
 const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
   props,
   ref
@@ -75,8 +76,10 @@ const UpdatePost = () => {
       if (file) {
         const name = `${new Date().getTime()}_${file.name}`;
         const image = await Upload(file, name);
-        setImage(image);
-        post.picture = image;
+        setImage(image.location);
+        post.picture = image.location;
+        console.log(image.key);
+        post.pictureId = image.key;
       }
     };
     getImage();
@@ -88,7 +91,7 @@ const UpdatePost = () => {
 
   const savePost = async () => {
     console.log(post);
-    if (post.title == "") {
+    if (post.title === "") {
       setOpen1({
         ...open1,
         open: true,
@@ -99,7 +102,7 @@ const UpdatePost = () => {
       });
       return;
     }
-    if (post.desc == "") {
+    if (post.desc === "") {
       setOpen1({
         ...open1,
         open: true,
