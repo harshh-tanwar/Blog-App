@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { AppBar, Container, Avatar, IconButton, Button } from "@mui/material";
+import { AppBar, Avatar, IconButton, Button } from "@mui/material";
 import logo from "../assets/ttn-logo-name.png";
 import GLogin from "./GLogin";
 import { ExitToApp } from "@mui/icons-material";
@@ -13,7 +13,6 @@ const Header = () => {
   const dispatch = useDispatch();
   const loggedUser = useSelector((state: any) => state.user.user.user);
   /*  console.log(loggedUser); */
-  const token = useSelector((state: any) => state.user.user.token);
 
   useEffect(() => {}, [loggedIn]);
 
@@ -55,14 +54,14 @@ const Header = () => {
           <>
             <Button
               variant="outlined"
-              onClick={() => navigate(`/user/${loggedUser._id}`)}
+              onClick={() => navigate(`/user/${loggedUser.user_id}`)}
             >
               Dashboard
             </Button>
             <IconButton>
               <Avatar
                 style={{ height: "40px", width: "40px" }}
-                src={loggedUser.userImage}
+                src={loggedUser.userimage}
               />
             </IconButton>
             <p>{loggedUser.name}</p>

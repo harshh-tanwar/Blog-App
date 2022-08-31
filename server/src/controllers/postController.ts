@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import Post from "../schema/postSchema";
-import User from "../schema/userSchema";
+import pool from "../database/dbConnectPg";
 
 export const createPost = async (req: Request, res: Response) => {
   try {
@@ -28,7 +28,10 @@ export const getPosts = async (req: Request, res: Response) => {
     const userId = req.query.userId;
     let posts;
     if (userId !== undefined) {
-      const user = await User.findById(userId);
+      const oldUser = await pool.query("SELECT * FROM users WHERE user_id = $1", [
+        userId,
+      ]);
+      const user = oldUser.rows[0];
       const email = user?.email;
       posts = await Post.find({ userEmail: { $in: email } }).sort({
         createdAt: -1,

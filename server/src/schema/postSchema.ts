@@ -19,7 +19,7 @@ const postSchema = new mongoose.Schema(
     userName: {
       type: String,
     },
-    userImage: {
+    userimage: {
       type: String,
     },
     userEmail: {

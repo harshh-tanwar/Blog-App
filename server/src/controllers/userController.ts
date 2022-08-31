@@ -1,81 +1,89 @@
 import { Request, Response } from "express";
-import User from "../schema/userSchema";
+import pool from "../database/dbConnectPg";
 import jwt from "jsonwebtoken";
 import config from "../config/config";
 
 //get a user
 export const getUser = async (req: Request, res: Response) => {
   try {
-    const user = await User.findById(req.params.id);
-    res.send(user);
-  } catch (error) {
-    res.status(400).send("Error getting User");
-  }
-};
-
-//register user
-export const registerUser = async (req: Request, res: Response) => {
-  const { name, email,userImage } = req.body;
-  try {
-    let user = await User.findOne({ email: email });
-    if (user) {
-      const token = jwt.sign(
-        { email: user.email, id: user._id },
-        config.jwtPrivateKey,
-        {
-          expiresIn: "1h",
-        }
-      );
-      return res
-        .header("x-auth-token", token)
-        .send({ user: user, token: token });
-    }
-
-    user = new User({
-      name: name,
-      email: email,
-      userImage: userImage,
-    });
-    await user.save();
-
-    const token = jwt.sign(
-      { email: user.email, id: user._id },
-      config.jwtPrivateKey,
-      {
-        expiresIn: "1h",
-      }
-    );
-    res.header("x-auth-token", token).send({ user: user, token: token });
+    const { id } = req.params;
+    const user = await pool.query("SELECT * FROM users WHERE user_id = $1", [
+      id,
+    ]);
+    res.status(200).json({ message: "Got the User", data: user.rows[0] });
   } catch (error) {
     res.send(error);
   }
 };
 
-//user Login
-/* export const login = async (req, res) => {
-  const { email, password } = req.body;
+//register user
+export const registerUser = async (req: Request, res: Response) => {
+  const { name, email, userimage } = req.body;
   try {
-    const user = await User.findOne({ email: email });
-    if (!user)
-      return res.status(400).json({
-        errorMessage: "User doesn't exist, kindly login with another account",
-      });
+    let user = await pool.query("SELECT * FROM users WHERE email = $1", [
+      email,
+    ]);
+    const oldUser = user.rows[0];
+    /* console.log("fetched", oldUser); */
 
-    if (user.google === true) {
+    /* login */
+    if (oldUser !== undefined) {
+      const token = jwt.sign(
+        { email: oldUser.email, id: oldUser.user_id },
+        config.jwtPrivateKey
+      );
       return res
-        .status(400)
-        .json({ errorMessage: "User must do Google Login" });
+        .header("x-auth-token", token)
+        .send({ user: oldUser, token: token });
     }
 
-    const validPassword = await bcrypt.compare(password, user.password);
-    if (!validPassword)
-      return res
-        .status(400)
-        .json({ errorMessage: "Invalid email or password" });
-
-    const token = user.generateAuthToken();
-    res.header("x-auth-token", token).json({ user: user, token: token });
+    /* register */
+    user = await pool.query(
+      "INSERT INTO users (name, email, userimage) VALUES ($1, $2, $3) RETURNING *",
+      [name, email, userimage]
+    );
+    const newUser = user.rows[0];
+    /* console.log("created", newUser); */
+    const token = jwt.sign(
+      { email: newUser.email, id: newUser.user_id },
+      config.jwtPrivateKey
+    );
+    res.header("x-auth-token", "token").send({ user: newUser, token: token });
   } catch (error) {
-    res.send(`Error: ${error}`);
+    res.send(error);
   }
-}; */
+};
+
+//update a user
+export const updateUser = async (req: Request, res: Response) => {
+  try {
+    const { id } = req.params;
+    const { name, email, userimage } = req.body;
+
+    const updatedUser = await pool.query(
+      "UPDATE users SET name=$1, email=$2, userimage=$3 WHERE user_id = $4 RETURNING *",
+      [name, email, userimage, id]
+    );
+
+    res
+      .status(200)
+      .json({ message: "Updated1 the User", data: updatedUser.rows[0] });
+  } catch (error) {
+    res.send(error);
+  }
+};
+
+//delete a user
+export const deleteUser = async (req: Request, res: Response) => {
+  try {
+    const { id } = req.params;
+    const deletedUser = await pool.query(
+      "DELETE FROM users WHERE user_id = $1",
+      [id]
+    );
+
+    res.status(200).json({ message: "Deleted the User" });
+  } catch (error) {
+    res.send(error);
+  }
+};

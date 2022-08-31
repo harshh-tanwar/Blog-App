@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, Suspense } from "react";
 import Post from "./Post";
 import "./style.css";
 import { Snackbar, Avatar, IconButton, Button } from "@mui/material";
@@ -37,6 +37,9 @@ const Posts = () => {
 
   useEffect(() => {
     dispatch(getPosts());
+  }, []);
+
+  useEffect(() => {
     setDeleted(false);
     if (deleted === true) {
       setOpen1({ ...open1, open: true, vertical: "top", horizontal: "right" });
@@ -47,9 +50,12 @@ const Posts = () => {
     setOpenSearch((p) => !p);
   };
 
-  const filteredPosts = posts.filter((post1: any) =>
-    post1.title.toLowerCase().includes(search.toLowerCase())
-  );
+  const filteredPosts = posts.filter((post1: any) => {
+    return (
+      post1.title?.toLowerCase().includes(search?.toLowerCase()) ||
+      post1.userName?.toLowerCase().includes(search?.toLowerCase())
+    );
+  });
 
   return (
     <div className="posts_container">
@@ -110,7 +116,7 @@ const Posts = () => {
             ))}
           </>
         ) : (
-          <p>No related items</p>
+          <p>No items found</p>
         )}
       </div>
     </div>

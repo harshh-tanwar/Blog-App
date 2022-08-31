@@ -27,7 +27,7 @@ interface Props {
     pictureId: string;
     createdAt: string;
     userName: string;
-    userImage: string;
+    userimage: string;
     userEmail: string;
   };
   deleted: any;
@@ -67,7 +67,7 @@ const Post: React.FC<Props> = ({ post, deleted, setDeleted }) => {
   return (
     <Card className="post_container">
       <CardHeader
-        avatar={<Avatar src={post.userImage} />}
+        avatar={<Avatar src={post.userimage} />}
         action={
           <>
             {user && user.email === post.userEmail ? (

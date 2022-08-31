@@ -4,6 +4,6 @@ export interface initPost{
   picture: string;
   pictureId: string;
   userName: string;
-  userImage: string;
+  userimage: string;
   userEmail: string;
 }

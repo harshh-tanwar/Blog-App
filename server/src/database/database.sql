@@ -1,0 +1,2 @@
+CREATE DATABASE Luff_Blog,
+

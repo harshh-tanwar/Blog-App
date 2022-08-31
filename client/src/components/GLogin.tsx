@@ -28,7 +28,7 @@ const GLogin = () => {
       const userData = {
         name: user.displayName,
         email: user.email,
-        userImage: user.photoURL,
+        userimage: user.photoURL,
       };
 
       dispatch(getUser(userData));

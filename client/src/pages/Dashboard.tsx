@@ -40,7 +40,7 @@ const Dashboard = () => {
       navigate("*");
       return;
     }
-    dispatch(userPosts(user._id));
+    dispatch(userPosts(user.user_id));
     setDeleted(false);
     if (deleted === true) {
       setOpen1({ ...open1, open: true, vertical: "top", horizontal: "right" });
@@ -72,7 +72,7 @@ const Dashboard = () => {
           </Snackbar>
           <div className="dash_container">
             <div className="dashUser_container">
-              <img src={user.userImage} alt="userImage" width="200px" />
+              <img src={user.userimage} alt="userimage" width="200px" />
               <h1>{user.name}</h1>
               <h3>{user.email}</h3>
               <h3>User Posts - {posts.length}</h3>

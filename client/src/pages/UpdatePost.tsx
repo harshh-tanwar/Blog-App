@@ -19,7 +19,7 @@ const initialValues: initPost = {
   picture: "",
   pictureId: "",
   userName: "Harsh",
-  userImage: "",
+  userimage: "",
   userEmail: "",
 };
 const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(

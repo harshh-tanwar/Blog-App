@@ -17,7 +17,7 @@ const initialValues: initPost = {
   picture: "",
   pictureId: "",
   userName: "Harsh",
-  userImage: "",
+  userimage: "",
   userEmail: "",
 };
 const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
@@ -56,7 +56,7 @@ const CreatePost = () => {
     if (loggedUser === undefined || loggedUser === null) {
       navigate("/");
     } else {
-      post.userImage = loggedUser.userImage;
+      post.userimage = loggedUser.userimage;
       post.userName = loggedUser.name;
       post.userEmail = loggedUser.email;
       const getImage = async () => {
